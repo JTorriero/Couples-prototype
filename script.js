@@ -28,6 +28,7 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let currentRelatedQuestionIndex = 0;
+let isExploring = false; // To track if we're in the 'explore this more' mode
 
 // Get DOM elements
 const welcomeSection = document.getElementById("welcome");
@@ -64,15 +65,18 @@ function displayQuestion() {
         exploreBtn.style.display = "none";
     }
 
-    // Reset related question index when a new question is displayed
-    currentRelatedQuestionIndex = 0;
-
     // Show the 'Next Question' button
     nextQuestionBtn.style.display = "inline-block";
     message.style.display = "none"; // Hide the message area when a new question is shown
 }
 
 function nextQuestion() {
+    // If we're exploring, reset to the original question
+    if (isExploring) {
+        isExploring = false;
+        currentRelatedQuestionIndex = 0;
+    }
+
     // If we have more questions, move to the next one
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
@@ -87,10 +91,11 @@ function nextQuestion() {
 }
 
 function exploreMore() {
-    // If we have more related questions for the current question, display one
     if (currentRelatedQuestionIndex < questions[currentQuestionIndex].relatedQuestions.length) {
+        // If we have more related questions, display one
         questionText.textContent = questions[currentQuestionIndex].relatedQuestions[currentRelatedQuestionIndex];
         currentRelatedQuestionIndex++;
+        isExploring = true;
     } else {
         // If no related questions are available, notify user
         message.textContent = "No more related questions. Please choose 'Next Question' to start again.";
