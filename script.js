@@ -28,4 +28,6 @@ function displayNextQuestion() {
     }
 }
 
-document.getElementById('next-question-btn').addEventListener('click', displayNextQuestion);
+document.getElementById('next-question-btn').addEventListener('click', function() {
+    displayNextQuestion();
+});
