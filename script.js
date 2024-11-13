@@ -76,24 +76,29 @@ function displayQuestion() {
 }
 
 function nextQuestion() {
-    // If we're exploring related questions, reset exploration
+    // If we are in exploration mode, reset exploration
     if (isExploring) {
         isExploring = false;
         currentRelatedQuestionIndex = 0;
     }
 
-    // If there are more questions, move to the next one
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        displayQuestion();
+    // If we've reached the end of the questions
+    if (currentQuestionIndex >= questions.length - 1) {
+        currentQuestionIndex = 0; // Reset to the first question
+        message.style.display = "none"; // Hide the end message
     } else {
-        // No more questions, show message and show the next question button again
-        message.textContent = "No more questions available. Please choose 'Next Question' to start again.";
-        message.style.display = "inline-block";
-        nextQuestionBtn.style.display = "inline-block"; // Ensure the button is visible
-        exploreBtn.style.display = "none"; // Hide the explore button
+        currentQuestionIndex++;
+    }
+
+    // Display the next question
+    displayQuestion();
+
+    // Hide the "Next Question" button if there are no more questions to display
+    if (currentQuestionIndex >= questions.length - 1) {
+        nextQuestionBtn.style.display = "none"; // Hide the button at the end of the list
     }
 }
+
 
 
 function exploreMore() {
