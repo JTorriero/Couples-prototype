@@ -1,63 +1,59 @@
+// Question data (modify to fit your list)
 const questions = [
     {
         question: "What’s your opinion on how we divide household chores?",
-        relatedQuestions: [
-            "How do you feel about sharing finances in a marriage?",
-            "What are your thoughts on household responsibilities and fairness?"
-        ]
+        related: ["How do you feel about sharing finances in a marriage?", "What do you think is the best way to handle household responsibilities?"]
     },
     {
         question: "How do you feel about sharing finances in a marriage?",
-        relatedQuestions: [
-            "What are your thoughts on budgeting together?",
-            "How do you feel about joint bank accounts?"
-        ]
+        related: ["What do you think is the best way to handle household responsibilities?", "What would make you feel more secure in a relationship financially?"]
     },
-    // Add more questions and related questions here
+    // Add more questions and related questions as needed
 ];
 
-let currentQuestionIndex = 0;
-let relatedQuestionsIndex = 0;
 let currentQuestion = null;
+let relatedQuestions = [];
+let currentRelatedIndex = 0;
 
-const quickStartBtn = document.getElementById("quickStartBtn");
-const chooseThemeBtn = document.getElementById("chooseThemeBtn");
-const exploreMoreBtn = document.getElementById("exploreMoreBtn");
-const nextQuestionBtn = document.getElementById("nextQuestionBtn");
-const currentQuestionElement = document.getElementById("currentQuestion");
+const welcomeSection = document.getElementById("welcome");
+const questionSection = document.getElementById("question-section");
+const nextQuestionBtn = document.getElementById("next-question-btn");
+const exploreBtn = document.getElementById("explore-btn");
+const messageDiv = document.getElementById("message");
+const quickStartBtn = document.getElementById("quick-start-btn");
 
-quickStartBtn.addEventListener("click", startQuickStart);
-nextQuestionBtn.addEventListener("click", nextQuestion);
-exploreMoreBtn.addEventListener("click", exploreMore);
+const chooseThemeBtn = document.getElementById("choose-theme-btn");
+const questionDisplay = document.getElementById("question");
 
-function startQuickStart() {
-    // Pick a random question
-    currentQuestionIndex = Math.floor(Math.random() * questions.length);
-    currentQuestion = questions[currentQuestionIndex];
-    relatedQuestionsIndex = 0;
-    updateQuestionDisplay();
+// Event listener for Quick Start button
+quickStartBtn.addEventListener("click", () => {
+    welcomeSection.style.display = "none";
+    questionSection.style.display = "block";
+    loadNextQuestion();
+});
+
+// Load next random question
+function loadNextQuestion() {
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    currentQuestion = questions[randomIndex];
+    relatedQuestions = [...currentQuestion.related];
+    currentRelatedIndex = 0;
+    questionDisplay.textContent = currentQuestion.question;
+    messageDiv.style.display = "none";
 }
 
-function nextQuestion() {
-    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Cycle through the questions
-    currentQuestion = questions[currentQuestionIndex];
-    relatedQuestionsIndex = 0;
-    updateQuestionDisplay();
-}
+// Event listener for Next Question button
+nextQuestionBtn.addEventListener("click", () => {
+    loadNextQuestion();
+});
 
-function exploreMore() {
-    if (currentQuestion && relatedQuestionsIndex < currentQuestion.relatedQuestions.length) {
-        relatedQuestionsIndex++;
-        updateQuestionDisplay();
+// Event listener for Explore This More button
+exploreBtn.addEventListener("click", () => {
+    if (currentRelatedIndex < relatedQuestions.length) {
+        questionDisplay.textContent = relatedQuestions[currentRelatedIndex];
+        currentRelatedIndex++;
     } else {
-        currentQuestionElement.textContent = "No more related questions. Choose a new question.";
+        messageDiv.textContent = "All related questions have been explored. Please choose a new question.";
+        messageDiv.style.display = "block";
     }
-}
-
-function updateQuestionDisplay() {
-    if (relatedQuestionsIndex === 0) {
-        currentQuestionElement.textContent = currentQuestion.question;
-    } else {
-        currentQuestionElement.textContent = currentQuestion.relatedQuestions[relatedQuestionsIndex - 1];
-    }
-}
+});
