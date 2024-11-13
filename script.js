@@ -87,13 +87,14 @@ function nextQuestion() {
         currentQuestionIndex++;
         displayQuestion();
     } else {
-        // No more questions, show message and hide buttons
+        // No more questions, show message and show the next question button again
         message.textContent = "No more questions available. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
-        nextQuestionBtn.style.display = "none";
-        exploreBtn.style.display = "none";
+        nextQuestionBtn.style.display = "inline-block"; // Ensure the button is visible
+        exploreBtn.style.display = "none"; // Hide the explore button
     }
 }
+
 
 function exploreMore() {
     // If there are more related questions, show the next related question
