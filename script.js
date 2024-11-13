@@ -68,12 +68,16 @@ function exploreMore() {
     const related = questions[originalQuestionIndex].relatedQuestions;
 
     if (related.length > 0) {
-        const nextRelatedQuestion = related.shift();
+        // Randomly select a related question each time "Explore This More" is clicked
+        const randomIndex = Math.floor(Math.random() * related.length);
+        const nextRelatedQuestion = related.splice(randomIndex, 1)[0];
+
+        // Display original question and new related question below
         questionElement.textContent = "Question: " + questions[originalQuestionIndex].question + " (Explore this more!)";
         let relatedQuestionElement = document.createElement("p");
-        relatedQuestionElement.textContent = nextRelatedQuestion;
+        relatedQuestionElement.textContent = "Related: " + nextRelatedQuestion;
         questionElement.appendChild(relatedQuestionElement);
     } else {
-        alert("No related question available.");
+        alert("No more related questions available.");
     }
 }
