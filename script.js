@@ -79,4 +79,22 @@ function nextQuestion() {
         displayQuestion();
     } else {
         // All questions are shown, notify user
-  
+        message.textContent = "No more questions available. Please choose 'Next Question' to start again.";
+        message.style.display = "inline-block";
+        nextQuestionBtn.style.display = "none"; // Hide the next button after all questions are shown
+        exploreBtn.style.display = "none"; // Hide the explore button once all questions are exhausted
+    }
+}
+
+function exploreMore() {
+    // If we have more related questions for the current question, display one
+    if (currentRelatedQuestionIndex < questions[currentQuestionIndex].relatedQuestions.length) {
+        questionText.textContent = questions[currentQuestionIndex].relatedQuestions[currentRelatedQuestionIndex];
+        currentRelatedQuestionIndex++;
+    } else {
+        // If no related questions are available, notify user
+        message.textContent = "No more related questions. Please choose 'Next Question' to start again.";
+        message.style.display = "inline-block";
+        exploreBtn.style.display = "none"; // Hide the explore button once all related questions are exhausted
+    }
+}
