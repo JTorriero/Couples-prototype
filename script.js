@@ -9,6 +9,7 @@ const questions = [
 let currentQuestionIndex = 0;
 let currentRelatedQuestionIndex = 0;
 let isExploring = false;
+let hasMoreRelatedQuestions = true;
 
 // Elements
 const questionText = document.getElementById('question');
@@ -44,6 +45,7 @@ function nextQuestion() {
     if (isExploring) {
         isExploring = false;
         currentRelatedQuestionIndex = 0;
+        hasMoreRelatedQuestions = true; // Reset related questions
     }
 
     // If we've run out of questions, show message and restart button
@@ -65,13 +67,18 @@ function nextQuestion() {
 // Explore related questions
 function exploreMore() {
     isExploring = true;
-    if (currentRelatedQuestionIndex < questions[currentQuestionIndex].related.length - 1) {
+
+    if (currentRelatedQuestionIndex < questions[currentQuestionIndex].related.length) {
+        // Show related question
+        questionText.textContent = questions[currentQuestionIndex].related[currentRelatedQuestionIndex];
         currentRelatedQuestionIndex++;
-        displayQuestion();
+        message.style.display = "none"; // Hide message
     } else {
+        // No more related questions
         message.textContent = "No more related questions. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
         nextQuestionBtn.style.display = "inline-block";
         exploreBtn.style.display = "none"; // Hide Explore button after all related questions
+        hasMoreRelatedQuestions = false; // Reset this flag
     }
 }
