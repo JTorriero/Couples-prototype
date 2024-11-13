@@ -29,12 +29,17 @@ function displayNextQuestion() {
         document.getElementById('question').textContent = questions[currentQuestionIndex];
         currentQuestionIndex++;  // Move to the next question
     } else {
-        document.getElementById('question').textContent = "No more questions available.";
-        document.getElementById('next-question-btn').style.display = 'none';  // Hide the next button when done
+        document.getElementById('question').textContent = "No more questions. Please choose 'Next Question' to start again.";
+        document.getElementById('next-question-btn').textContent = 'Start Over';  // Change button text
     }
 }
 
 // Next question button event listener
 document.getElementById('next-question-btn').addEventListener('click', function() {
+    if (currentQuestionIndex >= questions.length) {
+        // Reset to the first question
+        currentQuestionIndex = 0;
+        document.getElementById('next-question-btn').textContent = 'Next Question';  // Reset button text
+    }
     displayNextQuestion();
 });
