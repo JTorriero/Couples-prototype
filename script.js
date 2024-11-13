@@ -28,9 +28,11 @@ function displayNextQuestion() {
     if (currentQuestionIndex < questions.length) {
         document.getElementById('question').textContent = questions[currentQuestionIndex];
         currentQuestionIndex++;  // Move to the next question
+        document.getElementById('message').style.display = 'none';  // Hide message if there are more questions
     } else {
-        document.getElementById('question').textContent = "No more questions. Please choose 'Next Question' to start again.";
+        document.getElementById('question').textContent = "No more questions available.";
         document.getElementById('next-question-btn').textContent = 'Start Over';  // Change button text
+        document.getElementById('message').style.display = 'block';  // Display message
     }
 }
 
