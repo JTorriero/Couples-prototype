@@ -19,23 +19,23 @@ const questions = [
             "What’s your opinion on shared credit cards?"
         ]
     },
-    // Add more questions here...
+    // More questions here...
 ];
 
-let currentQuestionIndex = 0;
+let currentQuestion = 0;
 let currentRelatedIndex = 0;
 
 function displayQuestion() {
     const questionElement = document.getElementById('question');
     const exploreButton = document.getElementById('explore');
     const nextButton = document.getElementById('next');
-    const relatedQuestions = questions[currentQuestionIndex].relatedQuestions;
+    const relatedQuestions = questions[currentQuestion].relatedQuestions;
 
-    questionElement.textContent = questions[currentQuestionIndex].question;
+    questionElement.textContent = questions[currentQuestion].question;
     exploreButton.textContent = "Explore This More";
     nextButton.textContent = "Next Question";
 
-    // Reset related question index
+    // Reset the related question index
     currentRelatedIndex = 0;
     exploreButton.disabled = false;
     nextButton.disabled = false;
@@ -43,7 +43,7 @@ function displayQuestion() {
 
 function exploreMore() {
     const exploreButton = document.getElementById('explore');
-    const relatedQuestions = questions[currentQuestionIndex].relatedQuestions;
+    const relatedQuestions = questions[currentQuestion].relatedQuestions;
 
     if (currentRelatedIndex < relatedQuestions.length) {
         document.getElementById('question').textContent = relatedQuestions[currentRelatedIndex];
@@ -56,8 +56,8 @@ function exploreMore() {
 }
 
 function nextQuestion() {
-    // Move to the next question in the list
-    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+    // Move to the next question
+    currentQuestion = (currentQuestion + 1) % questions.length;
     displayQuestion();
     document.getElementById('explore').disabled = false; // Enable "Explore This More" button
 }
