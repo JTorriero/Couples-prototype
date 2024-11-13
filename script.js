@@ -18,8 +18,18 @@ const questions = [
             "How do you approach saving for future plans?",
             "What’s your opinion on discussing money regularly?"
         ]
+    },
+    {
+        question: "What are your thoughts on raising children?",
+        relatedQuestions: [
+            "What’s your approach to discipline?",
+            "How do you feel about educating children together?",
+            "What’s your view on work-life balance while raising kids?",
+            "How do you plan for your child’s future?",
+            "What’s your opinion on managing family schedules?"
+        ]
     }
-    // Add more questions and related questions as needed
+    // Add more questions here
 ];
 
 let currentQuestionIndex = 0;
@@ -45,7 +55,7 @@ function displayQuestion() {
 
 function nextQuestion() {
     // Move to next question, cycling back to the first question after the last
-    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; 
+    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
     displayQuestion();
 }
 
