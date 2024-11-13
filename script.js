@@ -1,71 +1,69 @@
 const questions = [
     {
-        question: "How do you feel about sharing finances in a marriage?",
-        related: [
-            "What are your thoughts on budgeting together as a couple?",
-            "How do you feel about separate or joint bank accounts?",
-            "What does financial independence mean to you in a relationship?"
+        question: "What’s your opinion on how we divide household chores?",
+        relatedQuestions: [
+            "How do you feel about sharing responsibilities in the home?",
+            "What’s your approach to organizing tasks at home?",
+            "How do you prioritize tasks around the house?",
+            "What are your thoughts on how chores affect our relationship?",
+            "What’s your opinion on sharing home maintenance duties?"
         ]
     },
     {
-        question: "What’s your opinion on how we divide household chores?",
-        related: [
-            "How can we improve our sharing of responsibilities?",
-            "Do you think dividing chores by skill or preference works better?",
-            "How do you feel about a chore schedule or list?"
+        question: "How do you feel about sharing finances in a marriage?",
+        relatedQuestions: [
+            "How do you feel about managing a joint bank account?",
+            "What’s your view on budgeting as a couple?",
+            "How do you handle financial goals together?",
+            "How do you approach saving for future plans?",
+            "What’s your opinion on discussing money regularly?"
         ]
-    },
-    // Add more questions here
+    }
+    // Add more questions and related questions as needed
 ];
 
-let currentQuestionIndex = -1; // This will track the current question being shown.
-let relatedQuestions = []; // This will track the related questions for the current question.
-let relatedIndex = 0; // This will track the current related question index.
+let currentQuestionIndex = 0;
+let relatedQuestionIndex = 0;
+let displayedRelatedQuestions = [];
 
-document.getElementById('quickStartButton').addEventListener('click', startQuickStart);
+document.getElementById("quickStartButton").addEventListener("click", startQuickStart);
+document.getElementById("nextQuestionButton").addEventListener("click", nextQuestion);
+document.getElementById("exploreMoreButton").addEventListener("click", exploreMore);
 
 function startQuickStart() {
-    currentQuestionIndex = getRandomQuestionIndex();
-    displayQuestion(questions[currentQuestionIndex].question);
-    relatedQuestions = questions[currentQuestionIndex].related.slice(); // Copy related questions
-    relatedIndex = 0; // Reset related question index
+    document.getElementById("startPage").style.display = "none";
+    document.getElementById("questionPage").style.display = "block";
+    displayQuestion();
 }
 
-function displayQuestion(questionText) {
-    document.getElementById('questionDisplay').textContent = questionText;
-    showExploreButton();
-}
-
-function showExploreButton() {
-    const exploreButton = document.createElement('button');
-    exploreButton.id = 'exploreMoreButton';
-    exploreButton.textContent = 'Explore This More';
-    exploreButton.addEventListener('click', exploreMore);
-    document.body.appendChild(exploreButton);
-    
-    const nextButton = document.createElement('button');
-    nextButton.id = 'nextQuestionButton';
-    nextButton.textContent = 'Next Question';
-    nextButton.addEventListener('click', nextQuestion);
-    document.body.appendChild(nextButton);
-}
-
-function exploreMore() {
-    if (relatedIndex < relatedQuestions.length) {
-        displayQuestion(relatedQuestions[relatedIndex]);
-        relatedIndex++;
-    } else {
-        alert("No related questions available. Please choose a new question.");
-    }
+function displayQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+    document.getElementById("questionDisplay").textContent = currentQuestion.question;
+    relatedQuestionIndex = 0; // Reset related questions for new main question
+    displayedRelatedQuestions = []; // Clear displayed related questions
 }
 
 function nextQuestion() {
-    currentQuestionIndex = getRandomQuestionIndex();
-    displayQuestion(questions[currentQuestionIndex].question);
-    relatedQuestions = questions[currentQuestionIndex].related.slice(); // Reset related questions
-    relatedIndex = 0;
+    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Loop through questions
+    displayQuestion();
 }
 
-function getRandomQuestionIndex() {
-    return Math.floor(Math.random() * questions.length);
+function exploreMore() {
+    const currentQuestion = questions[currentQuestionIndex];
+    if (relatedQuestionIndex < currentQuestion.relatedQuestions.length) {
+        const nextRelatedQuestion = currentQuestion.relatedQuestions[relatedQuestionIndex];
+        
+        // Check if it's already been displayed
+        if (displayedRelatedQuestions.includes(nextRelatedQuestion)) {
+            alert("No more related questions available.");
+            return;
+        }
+        
+        // Show the related question
+        displayedRelatedQuestions.push(nextRelatedQuestion);
+        relatedQuestionIndex++;
+        document.getElementById("questionDisplay").textContent = nextRelatedQuestion;
+    } else {
+        alert("No more related questions available.");
+    }
 }
