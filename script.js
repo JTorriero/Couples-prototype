@@ -1,4 +1,4 @@
-// Questions and related questions
+// Define questions and their related questions
 const questions = [
     {
         question: "What’s your opinion on how we divide household chores?",
@@ -28,7 +28,7 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let currentRelatedQuestionIndex = 0;
-let isExploring = false; // To track if we're in the 'explore this more' mode
+let isExploring = false; // Track if we are exploring related questions
 
 // Get DOM elements
 const welcomeSection = document.getElementById("welcome");
@@ -41,65 +41,64 @@ const message = document.getElementById("message");
 const quickStartBtn = document.getElementById("quick-start-btn");
 const chooseThemeBtn = document.getElementById("choose-theme-btn");
 
+// Event Listeners
 quickStartBtn.addEventListener("click", startQuickStart);
 nextQuestionBtn.addEventListener("click", nextQuestion);
 exploreBtn.addEventListener("click", exploreMore);
 
 function startQuickStart() {
-    // Hide welcome section and show the question section
+    // Show question section, hide welcome section
     welcomeSection.style.display = "none";
     questionSection.style.display = "block";
-
-    // Display the first question
     displayQuestion();
 }
 
 function displayQuestion() {
-    // Display the current question
+    // Display current question
     questionText.textContent = questions[currentQuestionIndex].question;
 
-    // Show the 'Explore This More' button only if there are related questions
+    // Show 'Explore This More' button if there are related questions
     if (questions[currentQuestionIndex].relatedQuestions.length > 0) {
         exploreBtn.style.display = "inline-block";
     } else {
         exploreBtn.style.display = "none";
     }
 
-    // Show the 'Next Question' button
+    // Show 'Next Question' button
     nextQuestionBtn.style.display = "inline-block";
-    message.style.display = "none"; // Hide the message area when a new question is shown
+    message.style.display = "none"; // Hide message if showing a new question
 }
 
 function nextQuestion() {
-    // If we're exploring, reset to the original question
     if (isExploring) {
+        // If we're exploring, reset the related questions
         isExploring = false;
         currentRelatedQuestionIndex = 0;
     }
 
-    // If we have more questions, move to the next one
+    // Check if there are more questions
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
         displayQuestion();
     } else {
-        // All questions are shown, notify user
+        // If no more questions, display the message to the user
         message.textContent = "No more questions available. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
-        nextQuestionBtn.style.display = "none"; // Hide the next button after all questions are shown
-        exploreBtn.style.display = "none"; // Hide the explore button once all questions are exhausted
+        nextQuestionBtn.style.display = "none"; // Hide 'Next Question' button
+        exploreBtn.style.display = "none"; // Hide 'Explore' button
     }
 }
 
 function exploreMore() {
+    // If there are more related questions, show them
     if (currentRelatedQuestionIndex < questions[currentQuestionIndex].relatedQuestions.length) {
-        // If we have more related questions, display one
         questionText.textContent = questions[currentQuestionIndex].relatedQuestions[currentRelatedQuestionIndex];
         currentRelatedQuestionIndex++;
         isExploring = true;
     } else {
-        // If no related questions are available, notify user
+        // If no related questions left, show a message
         message.textContent = "No more related questions. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
-        exploreBtn.style.display = "none"; // Hide the explore button once all related questions are exhausted
+        exploreBtn.style.display = "none"; // Hide 'Explore' button when no related questions are left
     }
 }
