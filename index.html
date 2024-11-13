@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Couples Conversation Starter</title>
+    <title>Couples Communication App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Couples Conversation Starter</h1>
-        <p>Choose an option to begin:</p>
-        <button id="quickStartBtn">Quick Start</button>
-        <button id="chooseThemeBtn">Choose a Theme</button>
+    <div id="welcome">
+        <h1>Welcome to Couples Communication!</h1>
+        <p>Start connecting through meaningful questions.</p>
+        <button id="quick-start-btn">Quick Start</button>
+        <button id="choose-theme-btn">Choose a Theme</button>
     </div>
-    
+    <div id="question-section" style="display: none;">
+        <p id="question"></p>
+        <button id="next-question-btn">Next Question</button>
+        <button id="explore-btn">Explore This More</button>
+        <div id="message" style="display: none;"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
