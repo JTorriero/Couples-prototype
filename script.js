@@ -19,7 +19,7 @@ const questions = [
             "What’s your opinion on shared credit cards?"
         ]
     },
-    // Add other questions here...
+    // More questions here...
 ];
 
 let currentQuestion = 0;
@@ -35,6 +35,8 @@ function displayQuestion() {
     exploreButton.textContent = "Explore This More";
     nextButton.textContent = "Next Question";
 
+    // Reset the related question index
+    currentRelatedIndex = 0;
     exploreButton.disabled = false;
     nextButton.disabled = false;
 }
@@ -49,15 +51,15 @@ function exploreMore() {
     } else {
         alert("No more related questions available. Please choose a new question.");
         document.getElementById('explore').disabled = true;
-        document.getElementById('next').disabled = false; // Enable the "Next Question" button
+        document.getElementById('next').disabled = false; // Enable "Next Question" button
     }
 }
 
 function nextQuestion() {
-    currentRelatedIndex = 0;
+    // Move to the next question
     currentQuestion = (currentQuestion + 1) % questions.length;
     displayQuestion();
-    document.getElementById('explore').disabled = false; // Enable the "Explore This More" button for the new question
+    document.getElementById('explore').disabled = false; // Enable "Explore This More" button
 }
 
 document.getElementById('explore').addEventListener('click', exploreMore);
