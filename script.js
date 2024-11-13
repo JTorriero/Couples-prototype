@@ -44,14 +44,10 @@ function displayQuestion() {
 }
 
 function nextQuestion() {
-    // Ensure that currentQuestionIndex moves only within available questions
-    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
-    
-    // Reset related question index and displayed questions when moving to a new main question
+    // Move to next question, cycling back to the first question after the last
+    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; 
     displayQuestion();
-    displayedRelatedQuestions = [];
 }
-
 
 function exploreMore() {
     const currentQuestion = questions[currentQuestionIndex];
