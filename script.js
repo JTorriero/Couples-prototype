@@ -86,18 +86,17 @@ function exploreMore() {
 // Reset to first question when the "Next Question" button is clicked at the end
 nextQuestionBtn.addEventListener('click', () => {
     if (message.textContent === "No more questions available. Please choose 'Next Question' to start again.") {
-        // Reset to the first question
+        // Reset to the first question and display it
         currentQuestionIndex = 0;
         currentRelatedQuestionIndex = 0;
         hasMoreRelatedQuestions = true;
 
-        // Re-enable the button for the first question
+        // Display the first question again and reset message
         displayQuestion();
         message.style.display = "none";
-        nextQuestionBtn.style.display = "inline-block";
-        exploreBtn.style.display = "inline-block";
     } else {
         nextQuestion();
     }
 });
+
 
