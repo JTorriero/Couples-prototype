@@ -1,115 +1,74 @@
-// Define the questions and related questions
+// Define questions with related questions
 const questions = [
-    {
-        question: "What’s your opinion on how we divide household chores?",
-        relatedQuestions: [
-            "How do you feel about splitting responsibilities in the house?",
-            "What tasks do you find most challenging when it comes to household chores?",
-            "How would you like to balance chores more evenly?"
-        ]
-    },
-    {
-        question: "How do you feel about sharing finances in a marriage?",
-        relatedQuestions: [
-            "What do you think is the best way to handle joint accounts?",
-            "How do you feel about one partner being the main breadwinner?",
-            "What financial goals do you think are important to work towards together?"
-        ]
-    },
-    {
-        question: "How do you prefer to spend quality time together?",
-        relatedQuestions: [
-            "What’s your idea of a perfect weekend getaway?",
-            "How can we make time for each other despite busy schedules?",
-            "What activities do you enjoy the most together?"
-        ]
-    }
+    { question: "Question 1", related: ["Related Question 1", "Related Question 2"] },
+    { question: "Question 2", related: ["Related Question 1", "Related Question 2"] },
+    { question: "Question 3", related: ["Related Question 1", "Related Question 2"] }
 ];
 
+// Variables to track state
 let currentQuestionIndex = 0;
 let currentRelatedQuestionIndex = 0;
 let isExploring = false;
 
-// Get DOM elements
-const welcomeSection = document.getElementById("welcome");
-const questionSection = document.getElementById("question-section");
-const questionText = document.getElementById("question");
-const nextQuestionBtn = document.getElementById("next-question-btn");
-const exploreBtn = document.getElementById("explore-btn");
-const message = document.getElementById("message");
+// Elements
+const questionText = document.getElementById('question');
+const message = document.getElementById('message');
+const nextQuestionBtn = document.getElementById('next-question-btn');
+const exploreBtn = document.getElementById('explore-btn');
 
-const quickStartBtn = document.getElementById("quick-start-btn");
-const chooseThemeBtn = document.getElementById("choose-theme-btn");
-
-// Event listeners
-quickStartBtn.addEventListener("click", startQuickStart);
-nextQuestionBtn.addEventListener("click", nextQuestion);
-exploreBtn.addEventListener("click", exploreMore);
-
-function startQuickStart() {
-    // Hide welcome section and show question section
-    welcomeSection.style.display = "none";
-    questionSection.style.display = "block";
+// Start quick start function
+document.getElementById('quick-start-btn').addEventListener('click', () => {
+    document.getElementById('welcome').style.display = 'none';
+    document.getElementById('question-section').style.display = 'block';
     displayQuestion();
-}
+});
 
+// Display current question
 function displayQuestion() {
-    // If exploring, show the related question, otherwise show the main question
     if (isExploring) {
-        questionText.textContent = questions[currentQuestionIndex].relatedQuestions[currentRelatedQuestionIndex];
-        currentRelatedQuestionIndex++;
+        questionText.textContent = questions[currentQuestionIndex].related[currentRelatedQuestionIndex];
     } else {
         questionText.textContent = questions[currentQuestionIndex].question;
-        currentRelatedQuestionIndex = 0; // Reset related question index
     }
-
-    // Show 'Explore This More' button if there are more related questions
-    if (currentRelatedQuestionIndex < questions[currentQuestionIndex].relatedQuestions.length) {
-        exploreBtn.style.display = "inline-block";
-    } else {
-        exploreBtn.style.display = "none";
-    }
-
-    // Show 'Next Question' button
-    nextQuestionBtn.style.display = "inline-block";
-    message.style.display = "none"; // Hide message if showing a new question
 }
 
+// Handle "Next Question"
+nextQuestionBtn.addEventListener('click', nextQuestion);
+
+// Handle "Explore This More"
+exploreBtn.addEventListener('click', exploreMore);
+
+// Show next question or restart flow
 function nextQuestion() {
-    // If we are in exploration mode, reset exploration
+    // Reset exploration state
     if (isExploring) {
         isExploring = false;
         currentRelatedQuestionIndex = 0;
     }
 
-    // If we've reached the end of the questions
-    if (currentQuestionIndex >= questions.length - 1) {
-        currentQuestionIndex = 0; // Reset to the first question
-        message.style.display = "none"; // Hide the end message
-    } else {
+    // If we're out of questions, reset to the first question
+    if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
-    }
-
-    // Display the next question
-    displayQuestion();
-
-    // Hide the "Next Question" button if there are no more questions to display
-    if (currentQuestionIndex >= questions.length - 1) {
-        nextQuestionBtn.style.display = "none"; // Hide the button at the end of the list
+        displayQuestion();
+    } else {
+        // No more questions, show message and restart button
+        message.textContent = "No more questions available. Please choose 'Next Question' to start again.";
+        message.style.display = "inline-block";
+        nextQuestionBtn.style.display = "inline-block";
+        exploreBtn.style.display = "none";
     }
 }
 
-
-
+// Explore related questions
 function exploreMore() {
-    // If there are more related questions, show the next related question
-    if (currentRelatedQuestionIndex < questions[currentQuestionIndex].relatedQuestions.length) {
-        isExploring = true;
+    isExploring = true;
+    if (currentRelatedQuestionIndex < questions[currentQuestionIndex].related.length - 1) {
+        currentRelatedQuestionIndex++;
         displayQuestion();
     } else {
-        // No related questions left, show a message
         message.textContent = "No more related questions. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
-        exploreBtn.style.display = "none"; // Hide 'Explore' button when no related questions are left
+        nextQuestionBtn.style.display = "inline-block";
+        exploreBtn.style.display = "none";
     }
 }
