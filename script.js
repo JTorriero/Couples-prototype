@@ -36,6 +36,12 @@ const questions = [
 let currentQuestion = null;
 let usedRelatedQuestions = new Set();
 
+function startQuickStart() {
+    // Start with a random question
+    getRandomQuestion();
+    document.getElementById("questionDisplay").textContent = "Question: " + currentQuestion.text;
+}
+
 function getRandomQuestion() {
     usedRelatedQuestions.clear(); // Reset related questions when starting a new question
     const randomIndex = Math.floor(Math.random() * questions.length);
@@ -63,3 +69,4 @@ function exploreRelatedQuestion() {
 // Attach event listeners to buttons
 document.getElementById("nextQuestionButton").addEventListener("click", getRandomQuestion);
 document.getElementById("exploreMoreButton").addEventListener("click", exploreRelatedQuestion);
+document.getElementById("quickStartButton").addEventListener("click", startQuickStart);
