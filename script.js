@@ -1,83 +1,65 @@
-let questions = [
+// Questions and related questions
+const questions = [
     {
-        question: "How do you feel about sharing finances in a marriage?",
-        relatedQuestions: [
-            "What are your views on budgeting together?",
-            "How would you approach saving for future goals?",
-            "What financial goals do you think we should prioritize?",
-            "What’s your opinion on debt and loans in a marriage?",
-            "How do you feel about discussing large purchases before buying?"
+        text: "How do you feel about sharing finances in a marriage?",
+        related: [
+            "What financial goals would you like us to set together?",
+            "How should we handle unexpected expenses?",
+            "What are your thoughts on saving for the future?",
+            "How do you feel about discussing finances openly?",
+            "What would be your ideal approach to managing finances as a team?"
         ]
     },
     {
-        question: "What’s your opinion on how we divide household chores?",
-        relatedQuestions: [
-            "How do you feel about a chore schedule?",
-            "What’s one household task you’d prefer not to do?",
-            "How should we handle cleaning responsibilities?",
-            "Do you feel the chores are fairly balanced between us?",
-            "How often should we revisit our division of chores?"
+        text: "What’s your opinion on how we divide household chores?",
+        related: [
+            "How do you feel about our current division of chores?",
+            "What chores do you enjoy, if any?",
+            "Would you like us to consider a new schedule for household tasks?",
+            "How can we keep things fair with household responsibilities?",
+            "What are ways we can support each other in maintaining the home?"
         ]
     },
     {
-        question: "How important is physical affection in a relationship?",
-        relatedQuestions: [
-            "How often do you feel we should spend quality time together?",
-            "How do you express affection most comfortably?",
-            "What are small ways to show affection daily?",
-            "What types of physical affection make you feel most loved?",
-            "What do you think about public displays of affection?"
+        text: "What boundaries should we set with family and friends?",
+        related: [
+            "How do we ensure we have enough time for each other?",
+            "What are your thoughts on privacy in our relationship?",
+            "How do you feel about setting boundaries for family events?",
+            "What are ways we can support each other with social commitments?",
+            "What boundaries do you feel are most important for us?"
         ]
     },
-    {
-        question: "How do you handle stress in daily life?",
-        relatedQuestions: [
-            "What helps you relax when you’re feeling overwhelmed?",
-            "What role do hobbies play in managing your stress?",
-            "How can we support each other during stressful times?",
-            "What are some of your personal stress triggers?",
-            "How do you usually unwind at the end of a hard day?"
-        ]
-    },
-    {
-        question: "What’s your perspective on balancing work and personal life?",
-        relatedQuestions: [
-            "What’s your ideal work-life balance?",
-            "How do you recharge after a busy workday?",
-            "What are your boundaries around work and personal time?",
-            "What personal time activities do you value most?",
-            "How can we support each other in maintaining balance?"
-        ]
-    }
+    // Add more questions with related items as needed
 ];
 
-let originalQuestionIndex = -1;
-let questionElement = document.getElementById("question");
+let currentQuestion = null;
+let usedRelatedQuestions = new Set();
 
-function nextQuestion() {
-    originalQuestionIndex = Math.floor(Math.random() * questions.length);
-    questionElement.textContent = "Question: " + questions[originalQuestionIndex].question;
+function getRandomQuestion() {
+    usedRelatedQuestions.clear(); // Reset related questions when starting a new question
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    currentQuestion = questions[randomIndex];
+    document.getElementById("questionDisplay").textContent = "Question: " + currentQuestion.text;
 }
 
-function exploreMore() {
-    if (originalQuestionIndex === -1) {
-        alert("No original question selected.");
+function exploreRelatedQuestion() {
+    if (!currentQuestion) {
+        alert("Please select a question first.");
         return;
     }
-
-    const related = questions[originalQuestionIndex].relatedQuestions;
-
-    if (related.length > 0) {
-        // Randomly select a related question each time "Explore This More" is clicked
-        const randomIndex = Math.floor(Math.random() * related.length);
-        const nextRelatedQuestion = related.splice(randomIndex, 1)[0];
-
-        // Display original question and new related question below
-        questionElement.textContent = "Question: " + questions[originalQuestionIndex].question + " (Explore this more!)";
-        let relatedQuestionElement = document.createElement("p");
-        relatedQuestionElement.textContent = "Related: " + nextRelatedQuestion;
-        questionElement.appendChild(relatedQuestionElement);
+    
+    const availableRelated = currentQuestion.related.filter((q) => !usedRelatedQuestions.has(q));
+    
+    if (availableRelated.length > 0) {
+        const nextRelated = availableRelated[Math.floor(Math.random() * availableRelated.length)];
+        usedRelatedQuestions.add(nextRelated);
+        document.getElementById("questionDisplay").textContent = "Related Question: " + nextRelated;
     } else {
-        alert("No more related questions available.");
+        alert("No more related questions available. Please choose a new question.");
     }
 }
+
+// Attach event listeners to buttons
+document.getElementById("nextQuestionButton").addEventListener("click", getRandomQuestion);
+document.getElementById("exploreMoreButton").addEventListener("click", exploreRelatedQuestion);
