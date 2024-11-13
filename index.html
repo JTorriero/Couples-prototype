@@ -13,12 +13,21 @@
 </head>
 <body>
     <h1>Couples Prototype</h1>
-    <div id="questionDisplay">Welcome! Would you like to Quick Start or Choose a Theme?</div>
     
-    <button id="quickStartButton">Quick Start</button>
-    <button id="chooseThemeButton">Choose a Theme</button>
+    <!-- Start Page -->
+    <div id="startPage">
+        <h2>Welcome to Couples Prototype!</h2>
+        <button id="quickStartButton">Quick Start</button>
+        <button id="chooseThemeButton">Choose a Theme</button>
+    </div>
     
-    <!-- JavaScript file linked here at the bottom -->
+    <!-- Question Page -->
+    <div id="questionPage" style="display:none;">
+        <div id="questionDisplay">Press "Quick Start" to begin.</div>
+        <button id="nextQuestionButton">Next Question</button>
+        <button id="exploreMoreButton">Explore This More</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
