@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Couple Conversation Prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Couple Conversation Prototype</h1>
+    
+    <div id="quick-start">
+      <h2>Quick Start Mode</h2>
+      <button onclick="startQuickStart()">Start Quick Start</button>
+      <button onclick="showFeedbackForm()">Give Feedback</button>
+    </div>
+
+    <div id="game-area" style="display: none;">
+      <h3>Question: <span id="question-text">Loading...</span></h3>
+      <button onclick="nextQuestion()">Next Question</button>
+      <button onclick="changeTheme()">Change Theme</button>
+      <button onclick="exploreMore()">Explore This More</button>
+    </div>
+  </div>
+
+  <div id="feedback-modal" style="display: none;">
+    <h2>Feedback</h2>
+    <textarea id="feedback-text" placeholder="Enter your feedback here"></textarea>
+    <button onclick="submitFeedback()">Submit Feedback</button>
+    <button onclick="closeFeedbackForm()">Close</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
