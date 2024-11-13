@@ -23,7 +23,7 @@ document.getElementById('quick-start-btn').addEventListener('click', () => {
     displayQuestion();
 });
 
-// Display current question
+// Display current question or related question
 function displayQuestion() {
     if (isExploring) {
         questionText.textContent = questions[currentQuestionIndex].related[currentRelatedQuestionIndex];
@@ -46,16 +46,19 @@ function nextQuestion() {
         currentRelatedQuestionIndex = 0;
     }
 
-    // If we're out of questions, reset to the first question
+    // If we've run out of questions, show message and restart button
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
         displayQuestion();
+        message.style.display = "none"; // Hide message
+        nextQuestionBtn.style.display = "inline-block"; // Show Next Question button
+        exploreBtn.style.display = "inline-block"; // Show Explore button
     } else {
-        // No more questions, show message and restart button
+        // No more main questions, show message to restart
         message.textContent = "No more questions available. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
         nextQuestionBtn.style.display = "inline-block";
-        exploreBtn.style.display = "none";
+        exploreBtn.style.display = "none"; // Hide Explore button after all questions
     }
 }
 
@@ -69,6 +72,6 @@ function exploreMore() {
         message.textContent = "No more related questions. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
         nextQuestionBtn.style.display = "inline-block";
-        exploreBtn.style.display = "none";
+        exploreBtn.style.display = "none"; // Hide Explore button after all related questions
     }
 }
