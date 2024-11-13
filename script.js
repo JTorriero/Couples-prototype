@@ -1,4 +1,5 @@
 const questions = [
+    // Questions and their related questions (10 questions, each with 5 related questions)
     {
         question: "What’s your opinion on how we divide household chores?",
         relatedQuestions: [
@@ -128,6 +129,7 @@ function exploreMore() {
     } else {
         alert("No more related questions available. Please choose a new question.");
         document.getElementById('explore').disabled = true;
+        document.getElementById('next').disabled = false; // Enable the "Next Question" button
     }
 }
 
@@ -135,6 +137,7 @@ function nextQuestion() {
     currentRelatedIndex = 0;
     currentQuestion = (currentQuestion + 1) % questions.length;
     displayQuestion();
+    document.getElementById('explore').disabled = false; // Enable the "Explore This More" button for the new question
 }
 
 document.getElementById('explore').addEventListener('click', exploreMore);
