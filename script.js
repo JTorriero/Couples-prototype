@@ -82,3 +82,16 @@ function exploreMore() {
         hasMoreRelatedQuestions = false; // Reset this flag
     }
 }
+
+// Reset to first question when the "Next Question" button is clicked at the end
+nextQuestionBtn.addEventListener('click', () => {
+    if (message.textContent === "No more questions available. Please choose 'Next Question' to start again.") {
+        currentQuestionIndex = 0;  // Reset to the first question
+        currentRelatedQuestionIndex = 0;  // Reset related questions
+        hasMoreRelatedQuestions = true;
+        displayQuestion();
+        message.style.display = "none";
+        nextQuestionBtn.style.display = "inline-block";
+        exploreBtn.style.display = "inline-block";
+    }
+});
