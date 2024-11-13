@@ -1,4 +1,3 @@
-// Sample question sets for the prototype
 const questions = {
   "conversation-starters": [
     "What's one thing you've always wanted to try together?",
@@ -17,23 +16,19 @@ const questions = {
   ]
 };
 
-// Starting Quick Start Mode
 function startQuickStart() {
   document.getElementById("quick-start").style.display = "none";
   document.getElementById("game-area").style.display = "block";
   showNextQuestion();
 }
 
-// Show the next question
 function showNextQuestion() {
   const categories = Object.keys(questions);
   const randomCategory = categories[Math.floor(Math.random() * categories.length)];
   const randomQuestion = questions[randomCategory][Math.floor(Math.random() * questions[randomCategory].length)];
-
   document.getElementById("question-text").textContent = randomQuestion;
 }
 
-// Change the theme (i.e., category)
 function changeTheme() {
   const newCategory = prompt("Enter a new theme (conversation-starters, storytelling, debate):");
   if (questions[newCategory]) {
@@ -43,24 +38,20 @@ function changeTheme() {
   }
 }
 
-// Explore the current question more (expand upon it)
 function exploreMore() {
   document.getElementById("question-text").textContent += " (Explore this more!)";
 }
 
-// Show the feedback form
 function showFeedbackForm() {
   document.getElementById("feedback-modal").style.display = "block";
 }
 
-// Submit feedback
 function submitFeedback() {
   const feedback = document.getElementById("feedback-text").value;
   alert("Thank you for your feedback: " + feedback);
   document.getElementById("feedback-modal").style.display = "none";
 }
 
-// Close the feedback form
 function closeFeedbackForm() {
   document.getElementById("feedback-modal").style.display = "none";
 }
