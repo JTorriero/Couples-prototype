@@ -1,47 +1,82 @@
-// List of questions
+// Questions and related questions
 const questions = [
-    'What’s your opinion on how we divide household chores?',
-    'How do you feel about sharing finances in a marriage?',
-    'What are your thoughts on parenting styles?',
-    'How do you feel about spending time with extended family?',
-    'What’s your idea of a perfect weekend together?',
-    'What’s one thing you’ve always wanted to try together?',
-    'How do you handle conflict in a relationship?',
-    'What role does communication play in your relationship?',
-    'What’s the most meaningful memory we’ve shared?',
-    'How do you feel about taking time for yourself in a relationship?'
+    {
+        question: "What’s your opinion on how we divide household chores?",
+        relatedQuestions: [
+            "How do you feel about splitting responsibilities in the house?",
+            "What tasks do you find most challenging when it comes to household chores?",
+            "How would you like to balance chores more evenly?"
+        ]
+    },
+    {
+        question: "How do you feel about sharing finances in a marriage?",
+        relatedQuestions: [
+            "What do you think is the best way to handle joint accounts?",
+            "How do you feel about one partner being the main breadwinner?",
+            "What financial goals do you think are important to work towards together?"
+        ]
+    },
+    {
+        question: "How do you prefer to spend quality time together?",
+        relatedQuestions: [
+            "What’s your idea of a perfect weekend getaway?",
+            "How can we make time for each other despite busy schedules?",
+            "What activities do you enjoy the most together?"
+        ]
+    }
 ];
 
-// Track the current question
 let currentQuestionIndex = 0;
+let currentRelatedQuestionIndex = 0;
 
-// Quick start button event listener
-document.getElementById('quick-start-btn').addEventListener('click', function() {
-    document.getElementById('welcome').style.display = 'none';
-    document.getElementById('question-section').style.display = 'block';
-    displayNextQuestion();
-});
+// Get DOM elements
+const welcomeSection = document.getElementById("welcome");
+const questionSection = document.getElementById("question-section");
+const questionText = document.getElementById("question");
+const nextQuestionBtn = document.getElementById("next-question-btn");
+const exploreBtn = document.getElementById("explore-btn");
+const message = document.getElementById("message");
 
-// Display next question function
-function displayNextQuestion() {
-    // Check if there are still questions left
-    if (currentQuestionIndex < questions.length) {
-        document.getElementById('question').textContent = questions[currentQuestionIndex];
-        currentQuestionIndex++;  // Move to the next question
-        document.getElementById('message').style.display = 'none';  // Hide message if there are more questions
-    } else {
-        document.getElementById('question').textContent = "No more questions available.";
-        document.getElementById('next-question-btn').textContent = 'Start Over';  // Change button text
-        document.getElementById('message').style.display = 'block';  // Display message
-    }
+const quickStartBtn = document.getElementById("quick-start-btn");
+const chooseThemeBtn = document.getElementById("choose-theme-btn");
+
+quickStartBtn.addEventListener("click", startQuickStart);
+nextQuestionBtn.addEventListener("click", nextQuestion);
+exploreBtn.addEventListener("click", exploreMore);
+
+function startQuickStart() {
+    // Hide welcome section and show the question section
+    welcomeSection.style.display = "none";
+    questionSection.style.display = "block";
+
+    // Display the first question
+    displayQuestion();
 }
 
-// Next question button event listener
-document.getElementById('next-question-btn').addEventListener('click', function() {
-    if (currentQuestionIndex >= questions.length) {
-        // Reset to the first question
-        currentQuestionIndex = 0;
-        document.getElementById('next-question-btn').textContent = 'Next Question';  // Reset button text
+function displayQuestion() {
+    // Display the current question
+    questionText.textContent = questions[currentQuestionIndex].question;
+
+    // Show the 'Explore This More' button only if there are related questions
+    if (questions[currentQuestionIndex].relatedQuestions.length > 0) {
+        exploreBtn.style.display = "inline-block";
+    } else {
+        exploreBtn.style.display = "none";
     }
-    displayNextQuestion();
-});
+
+    // Reset related question index when a new question is displayed
+    currentRelatedQuestionIndex = 0;
+
+    // Show the 'Next Question' button
+    nextQuestionBtn.style.display = "inline-block";
+    message.style.display = "none"; // Hide the message area when a new question is shown
+}
+
+function nextQuestion() {
+    // If we have more questions, move to the next one
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        displayQuestion();
+    } else {
+        // All questions are shown, notify user
+  
