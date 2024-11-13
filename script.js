@@ -42,8 +42,27 @@ function changeTheme() {
 }
 
 function exploreMore() {
-  document.getElementById("question-text").textContent += " (Explore this more!)";
+  // Retrieve the current question text
+  const currentQuestion = document.getElementById("question-text").textContent;
+
+  // Find a related question based on the current one
+  const relatedQuestions = {
+    "How do you feel about sharing finances in a marriage?": [
+      "What do you think is the best way to manage joint finances?",
+      "How do you feel about saving for the future together?"
+    ],
+    // Add more mappings for other questions here
+  };
+
+  // Check if there are related questions for the current one
+  if (relatedQuestions[currentQuestion]) {
+    const randomRelatedQuestion = relatedQuestions[currentQuestion][Math.floor(Math.random() * relatedQuestions[currentQuestion].length)];
+    document.getElementById("question-text").textContent = randomRelatedQuestion;
+  } else {
+    alert("No related question available.");
+  }
 }
+
 
 function showFeedbackForm() {
   document.getElementById("feedback-modal").style.display = "block";
