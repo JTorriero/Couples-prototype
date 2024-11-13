@@ -1,9 +1,4 @@
-document.getElementById('quick-start-btn').addEventListener('click', function() {
-    document.getElementById('welcome').style.display = 'none';
-    document.getElementById('question-section').style.display = 'block';
-    displayNextQuestion();
-});
-
+// List of questions
 const questions = [
     'What’s your opinion on how we divide household chores?',
     'How do you feel about sharing finances in a marriage?',
@@ -17,17 +12,29 @@ const questions = [
     'How do you feel about taking time for yourself in a relationship?'
 ];
 
+// Track the current question
 let currentQuestionIndex = 0;
 
+// Quick start button event listener
+document.getElementById('quick-start-btn').addEventListener('click', function() {
+    document.getElementById('welcome').style.display = 'none';
+    document.getElementById('question-section').style.display = 'block';
+    displayNextQuestion();
+});
+
+// Display next question function
 function displayNextQuestion() {
+    // Check if there are still questions left
     if (currentQuestionIndex < questions.length) {
         document.getElementById('question').textContent = questions[currentQuestionIndex];
-        currentQuestionIndex++;
+        currentQuestionIndex++;  // Move to the next question
     } else {
-        document.getElementById('question').textContent = "No more questions. Please choose 'Next Question' to start again.";
+        document.getElementById('question').textContent = "No more questions available.";
+        document.getElementById('next-question-btn').style.display = 'none';  // Hide the next button when done
     }
 }
 
+// Next question button event listener
 document.getElementById('next-question-btn').addEventListener('click', function() {
     displayNextQuestion();
 });
