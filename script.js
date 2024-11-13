@@ -44,9 +44,14 @@ function displayQuestion() {
 }
 
 function nextQuestion() {
-    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Loop through questions
+    // Ensure that currentQuestionIndex moves only within available questions
+    currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+    
+    // Reset related question index and displayed questions when moving to a new main question
     displayQuestion();
+    displayedRelatedQuestions = [];
 }
+
 
 function exploreMore() {
     const currentQuestion = questions[currentQuestionIndex];
