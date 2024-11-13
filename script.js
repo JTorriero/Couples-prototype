@@ -1,4 +1,4 @@
-// Define questions and their related questions
+// Define the questions and related questions
 const questions = [
     {
         question: "What’s your opinion on how we divide household chores?",
@@ -28,7 +28,7 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let currentRelatedQuestionIndex = 0;
-let isExploring = false; // Track if we are exploring related questions
+let isExploring = false;
 
 // Get DOM elements
 const welcomeSection = document.getElementById("welcome");
@@ -41,24 +41,30 @@ const message = document.getElementById("message");
 const quickStartBtn = document.getElementById("quick-start-btn");
 const chooseThemeBtn = document.getElementById("choose-theme-btn");
 
-// Event Listeners
+// Event listeners
 quickStartBtn.addEventListener("click", startQuickStart);
 nextQuestionBtn.addEventListener("click", nextQuestion);
 exploreBtn.addEventListener("click", exploreMore);
 
 function startQuickStart() {
-    // Show question section, hide welcome section
+    // Hide welcome section and show question section
     welcomeSection.style.display = "none";
     questionSection.style.display = "block";
     displayQuestion();
 }
 
 function displayQuestion() {
-    // Display current question
-    questionText.textContent = questions[currentQuestionIndex].question;
+    // If exploring, show the related question, otherwise show the main question
+    if (isExploring) {
+        questionText.textContent = questions[currentQuestionIndex].relatedQuestions[currentRelatedQuestionIndex];
+        currentRelatedQuestionIndex++;
+    } else {
+        questionText.textContent = questions[currentQuestionIndex].question;
+        currentRelatedQuestionIndex = 0; // Reset related question index
+    }
 
-    // Show 'Explore This More' button if there are related questions
-    if (questions[currentQuestionIndex].relatedQuestions.length > 0) {
+    // Show 'Explore This More' button if there are more related questions
+    if (currentRelatedQuestionIndex < questions[currentQuestionIndex].relatedQuestions.length) {
         exploreBtn.style.display = "inline-block";
     } else {
         exploreBtn.style.display = "none";
@@ -70,33 +76,32 @@ function displayQuestion() {
 }
 
 function nextQuestion() {
+    // If we're exploring related questions, reset exploration
     if (isExploring) {
-        // If we're exploring, reset the related questions
         isExploring = false;
         currentRelatedQuestionIndex = 0;
     }
 
-    // Check if there are more questions
+    // If there are more questions, move to the next one
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
         displayQuestion();
     } else {
-        // If no more questions, display the message to the user
+        // No more questions, show message and hide buttons
         message.textContent = "No more questions available. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
-        nextQuestionBtn.style.display = "none"; // Hide 'Next Question' button
-        exploreBtn.style.display = "none"; // Hide 'Explore' button
+        nextQuestionBtn.style.display = "none";
+        exploreBtn.style.display = "none";
     }
 }
 
 function exploreMore() {
-    // If there are more related questions, show them
+    // If there are more related questions, show the next related question
     if (currentRelatedQuestionIndex < questions[currentQuestionIndex].relatedQuestions.length) {
-        questionText.textContent = questions[currentQuestionIndex].relatedQuestions[currentRelatedQuestionIndex];
-        currentRelatedQuestionIndex++;
         isExploring = true;
+        displayQuestion();
     } else {
-        // If no related questions left, show a message
+        // No related questions left, show a message
         message.textContent = "No more related questions. Please choose 'Next Question' to start again.";
         message.style.display = "inline-block";
         exploreBtn.style.display = "none"; // Hide 'Explore' button when no related questions are left
