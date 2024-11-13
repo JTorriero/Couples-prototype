@@ -22,12 +22,15 @@ function startQuickStart() {
   showNextQuestion();
 }
 
+// Show the next question
 function showNextQuestion() {
   const categories = Object.keys(questions);
   const randomCategory = categories[Math.floor(Math.random() * categories.length)];
   const randomQuestion = questions[randomCategory][Math.floor(Math.random() * questions[randomCategory].length)];
+  
   document.getElementById("question-text").textContent = randomQuestion;
 }
+
 
 function changeTheme() {
   const newCategory = prompt("Enter a new theme (conversation-starters, storytelling, debate):");
