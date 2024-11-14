@@ -85,18 +85,15 @@ function exploreMore() {
 
 // Reset to first question when the "Next Question" button is clicked at the end
 nextQuestionBtn.addEventListener('click', () => {
-    if (message.textContent === "No more questions available. Please choose 'Next Question' to start again.") {
-        // Reset to the first question and display it
-        currentQuestionIndex = 0;
-        currentRelatedQuestionIndex = 0;
-        hasMoreRelatedQuestions = true;
-
-        // Display the first question again and reset message
-        displayQuestion();
-        message.style.display = "none";
+    // If we've reached the last question, reset to the first question
+    if (currentQuestionIndex >= questions.length - 1) {
+        currentQuestionIndex = 0; // Reset to the first question
     } else {
-        nextQuestion();
+        currentQuestionIndex++; // Move to the next question
     }
+    
+    // Display the current question
+    displayQuestion();
 });
 
 
