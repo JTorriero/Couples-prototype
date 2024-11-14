@@ -84,16 +84,18 @@ function exploreMore() {
 }
 
 // Reset to first question when the "Next Question" button is clicked at the end
+let currentQuestionIndex = 0; // Start at the first question
+
 nextQuestionBtn.addEventListener('click', () => {
-    // If we've reached the last question, reset to the first question
+    // Check if the current question is the last one
     if (currentQuestionIndex >= questions.length - 1) {
-        currentQuestionIndex = 0; // Reset to the first question
+        currentQuestionIndex = 0; // If it's the last question, reset to the first question
     } else {
-        currentQuestionIndex++; // Move to the next question
+        currentQuestionIndex++; // Otherwise, go to the next question
     }
-    
-    // Display the current question
-    displayQuestion();
+
+    displayQuestion(); // Display the new current question
 });
+
 
 
